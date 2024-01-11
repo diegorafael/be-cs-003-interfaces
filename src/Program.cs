@@ -9,7 +9,7 @@
             var tagarelador = new Tagarelador();
 
             Console.Clear();
-            TextoEmCor("------- INICIO -------", ConsoleColor.Gray);
+            Console.WriteLine("------- INICIO -------");
             Console.WriteLine($"Digite uma mensagem para o programa Tagarelo. Para finalizar digite '{COMANDO_SAIR}'");
 
             while (true)
@@ -19,23 +19,13 @@
                 var mensagem = Console.ReadLine();
 
                 if (COMANDO_SAIR.ToUpper().Trim() != mensagem.ToUpper().Trim())
-                {
-                    TextoEmCor(tagarelador.Tagarelar(), ConsoleColor.Magenta);
-                }
+                    tagarelador.Tagarelar();
                 else 
                     break;
             }
 
             Console.WriteLine();
-            TextoEmCor("------------ FIM ------------", ConsoleColor.Gray);
-        }
-
-        private static void TextoEmCor(string conteudo, ConsoleColor cor)
-        {
-            ConsoleColor anterior = Console.ForegroundColor;
-            Console.ForegroundColor = cor;
-            Console.WriteLine(conteudo);
-            Console.ForegroundColor = anterior;
+            Console.WriteLine("------------ FIM ------------");
         }
     }
 }
