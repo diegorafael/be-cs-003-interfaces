@@ -1,6 +1,6 @@
 ﻿namespace Tagarelo
 {
-    internal class Tagarelador
+    internal class Tagarelador : TagarelaBase, ITagarela
     {
         string[] respostas = [
             "Blá, blá, blá.",
@@ -10,10 +10,12 @@
             "Ahn?!",
         ];
 
-        public string Tagarelar()
+        public Tagarelador() : base(ConsoleColor.Magenta) { }
+
+        public void Tagarelar()
         {
             var aleatorio = new Random().Next(respostas.Length);
-            return respostas[aleatorio];
+            EscreverEmCor(respostas[aleatorio], _corTexto);
         }
     }
 }

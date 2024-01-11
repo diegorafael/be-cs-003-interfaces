@@ -3,39 +3,60 @@
     internal class Program
     {
         const string COMANDO_SAIR = "SAIR";
+        const string COMANDO_REINICIAR = "REINICIAR";
 
         static void Main(string[] args)
         {
-            var tagarelador = new Tagarelador();
+            ITagarela tagarela;
+            var sair = false;
 
-            Console.Clear();
-            TextoEmCor("------- INICIO -------", ConsoleColor.DarkGray);
-            Console.WriteLine($"Digite uma mensagem para o programa Tagarelo. Para finalizar digite '{COMANDO_SAIR}'");
-
-            while (true)
+            while (!sair)
             {
+                Console.Clear();
+                Console.WriteLine($"Escolha o humor do seu Tagarelo:");
+                Console.WriteLine($"*1 - Padrão");
+                Console.WriteLine($" 2 - O aforista do caos");
+                Console.WriteLine($" 3 - Seu Lunga");
                 Console.WriteLine();
 
-                var mensagem = Console.ReadLine();
+                var opcaoValida = int.TryParse(Console.ReadLine(), out int humor);
 
-                if (COMANDO_SAIR.ToUpper().Trim() != mensagem.ToUpper().Trim())
+                switch (humor)
                 {
-                    TextoEmCor(tagarelador.Tagarelar(), ConsoleColor.Magenta);
+                    case 2:
+                        tagarela = new TagarelaAforismo();
+                        Console.WriteLine("Você escolheu 2 - O aforista do caos.");
+                        break;
+                    case 3:
+                        tagarela = new TagarelaSeuLunga();
+                        Console.WriteLine("Você escolheu 3 - Seu Lunga.");
+                        break;
+                    default:
+                        tagarela = new Tagarelador();
+                        Console.WriteLine($"Opção padrão selecionada ({humor}): 1 - Padrão.");
+                        break;
                 }
-                else 
-                    break;
+
+                Console.WriteLine($"Digite uma mensagem para o programa Tagarelo. Para finalizar digite '{COMANDO_SAIR}'");
+
+                while (opcaoValida)
+                {
+                    Console.WriteLine();
+
+                    var mensagem = Console.ReadLine();
+
+                    if (COMANDO_SAIR.ToUpper().Trim() == mensagem?.ToUpper().Trim())
+                    {
+                        sair = true;
+                        break;
+                    }
+                    else if (COMANDO_REINICIAR.ToUpper().Trim() == mensagem?.ToUpper().Trim())
+                        break;
+                    else
+                        tagarela.Tagarelar();
+                }
             }
-
             Console.WriteLine();
-            TextoEmCor("------------ FIM ------------", ConsoleColor.DarkGray);
-        }
-
-        private static void TextoEmCor(string conteudo, ConsoleColor cor)
-        {
-            ConsoleColor anterior = Console.ForegroundColor;
-            Console.ForegroundColor = cor;
-            Console.WriteLine(conteudo);
-            Console.ForegroundColor = anterior;
         }
     }
 }
